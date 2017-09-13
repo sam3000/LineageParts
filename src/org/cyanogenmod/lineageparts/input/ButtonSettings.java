@@ -172,8 +172,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         final int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
-        final int deviceWakeKeys = getResources().getInteger(
-                com.android.internal.R.integer.config_deviceHardwareWakeKeys);
+        //final int deviceWakeKeys = getResources().getInteger(
+        //        com.android.internal.R.integer.config_deviceHardwareWakeKeys);
 
         final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
         final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
@@ -184,6 +184,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasCameraKey = (deviceKeys & KEY_MASK_CAMERA) != 0;
         final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
 
+        /*
         final boolean showHomeWake = (deviceWakeKeys & KEY_MASK_HOME) != 0;
         final boolean showBackWake = (deviceWakeKeys & KEY_MASK_BACK) != 0;
         final boolean showMenuWake = (deviceWakeKeys & KEY_MASK_MENU) != 0;
@@ -191,6 +192,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean showAppSwitchWake = (deviceWakeKeys & KEY_MASK_APP_SWITCH) != 0;
         final boolean showCameraWake = (deviceWakeKeys & KEY_MASK_CAMERA) != 0;
         final boolean showVolumeWake = (deviceWakeKeys & KEY_MASK_VOLUME) != 0;
+        */
 
         boolean hasAnyBindableKey = false;
         final PreferenceCategory powerCategory =
@@ -268,7 +270,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         // Only visible on devices that does not have a navigation bar already,
         // and don't even try unless the existing keys can be disabled
-        boolean needsNavigationBar = false;
+        boolean needsNavigationBar = true; //false;
+        /*
         if (hardware.isSupported(CMHardwareManager.FEATURE_KEY_DISABLE)) {
             try {
                 IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
@@ -287,6 +290,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else {
             prefScreen.removePreference(mDisableNavigationKeys);
         }
+        */
 
         if (hasPowerKey) {
             if (!TelephonyUtils.isVoiceCapable(getActivity())) {
@@ -302,9 +306,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasHomeKey) {
-            if (!showHomeWake) {
-                homeCategory.removePreference(findPreference(CMSettings.System.HOME_WAKE_SCREEN));
-            }
+            //if (!showHomeWake) {
+            //    homeCategory.removePreference(findPreference(CMSettings.System.HOME_WAKE_SCREEN));
+            //}
 
             if (!TelephonyUtils.isVoiceCapable(getActivity())) {
                 homeCategory.removePreference(mHomeAnswerCall);
@@ -320,18 +324,18 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasBackKey) {
-            if (!showBackWake) {
-                backCategory.removePreference(findPreference(CMSettings.System.BACK_WAKE_SCREEN));
-                prefScreen.removePreference(backCategory);
-            }
+            //if (!showBackWake) {
+            //    backCategory.removePreference(findPreference(CMSettings.System.BACK_WAKE_SCREEN));
+            //    prefScreen.removePreference(backCategory);
+            //}
         } else {
             prefScreen.removePreference(backCategory);
         }
 
         if (hasMenuKey) {
-            if (!showMenuWake) {
-                menuCategory.removePreference(findPreference(CMSettings.System.MENU_WAKE_SCREEN));
-            }
+            //if (!showMenuWake) {
+            //    menuCategory.removePreference(findPreference(CMSettings.System.MENU_WAKE_SCREEN));
+            //}
 
             Action pressAction = Action.fromSettings(resolver,
                     CMSettings.System.KEY_MENU_ACTION, Action.MENU);
@@ -348,9 +352,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasAssistKey) {
-            if (!showAssistWake) {
-                assistCategory.removePreference(findPreference(CMSettings.System.ASSIST_WAKE_SCREEN));
-            }
+            //if (!showAssistWake) {
+            //    assistCategory.removePreference(findPreference(CMSettings.System.ASSIST_WAKE_SCREEN));
+            //}
 
             Action pressAction = Action.fromSettings(resolver,
                     CMSettings.System.KEY_ASSIST_ACTION, Action.SEARCH);
@@ -366,10 +370,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasAppSwitchKey) {
-            if (!showAppSwitchWake) {
-                appSwitchCategory.removePreference(findPreference(
-                        CMSettings.System.APP_SWITCH_WAKE_SCREEN));
-            }
+            //if (!showAppSwitchWake) {
+            //    appSwitchCategory.removePreference(findPreference(
+            //            CMSettings.System.APP_SWITCH_WAKE_SCREEN));
+            //}
 
             Action pressAction = Action.fromSettings(resolver,
                     CMSettings.System.KEY_APP_SWITCH_ACTION, Action.APP_SWITCH);
@@ -390,21 +394,21 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                     (SwitchPreference) findPreference(CMSettings.System.CAMERA_SLEEP_ON_RELEASE);
             mCameraLaunch = (SwitchPreference) findPreference(CMSettings.System.CAMERA_LAUNCH);
 
-            if (!showCameraWake) {
-                prefScreen.removePreference(mCameraWakeScreen);
-            }
+            //if (!showCameraWake) {
+            //    prefScreen.removePreference(mCameraWakeScreen);
+            //}
             // Only show 'Camera sleep on release' if the device has a focus key
-            if (res.getBoolean(com.android.internal.R.bool.config_singleStageCameraKey)) {
-                prefScreen.removePreference(mCameraSleepOnRelease);
-            }
+            //if (res.getBoolean(com.android.internal.R.bool.config_singleStageCameraKey)) {
+            //    prefScreen.removePreference(mCameraSleepOnRelease);
+            //}
         } else {
             prefScreen.removePreference(cameraCategory);
         }
 
         if (DeviceUtils.hasVolumeRocker(getActivity())) {
-            if (!showVolumeWake) {
-                volumeCategory.removePreference(findPreference(CMSettings.System.VOLUME_WAKE_SCREEN));
-            }
+            //if (!showVolumeWake) {
+            //    volumeCategory.removePreference(findPreference(CMSettings.System.VOLUME_WAKE_SCREEN));
+            //}
 
             if (!TelephonyUtils.isVoiceCapable(getActivity())) {
                 volumeCategory.removePreference(
@@ -448,17 +452,17 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             Log.e(TAG, "Error getting navigation bar status");
         }
 
-        final ButtonBacklightBrightness backlight =
-                (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
-        if (!backlight.isButtonSupported() && !backlight.isKeyboardSupported()) {
-            prefScreen.removePreference(backlight);
-        }
+        //final ButtonBacklightBrightness backlight =
+        //        (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
+        //if (!backlight.isButtonSupported() && !backlight.isKeyboardSupported()) {
+        //    prefScreen.removePreference(backlight);
+        //}
 
         if (mCameraWakeScreen != null) {
-            if (mCameraSleepOnRelease != null && !getResources().getBoolean(
-                    com.android.internal.R.bool.config_singleStageCameraKey)) {
-                mCameraSleepOnRelease.setDependency(CMSettings.System.CAMERA_WAKE_SCREEN);
-            }
+            //if (mCameraSleepOnRelease != null && !getResources().getBoolean(
+            //        com.android.internal.R.bool.config_singleStageCameraKey)) {
+            //    mCameraSleepOnRelease.setDependency(CMSettings.System.CAMERA_WAKE_SCREEN);
+            //}
         }
         mVolumeWakeScreen = (SwitchPreference) findPreference(CMSettings.System.VOLUME_WAKE_SCREEN);
         mVolumeMusicControls = (SwitchPreference) findPreference(KEY_VOLUME_MUSIC_CONTROLS);
@@ -676,15 +680,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
         final PreferenceCategory appSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-        final ButtonBacklightBrightness backlight =
-                (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
+        //final ButtonBacklightBrightness backlight =
+        //        (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
 
         /* Toggle backlight control depending on navbar state, force it to
            off if enabling */
-        if (backlight != null) {
-            backlight.setEnabled(!navbarEnabled);
-            backlight.updateSummary();
-        }
+        //if (backlight != null) {
+        //    backlight.setEnabled(!navbarEnabled);
+        //    backlight.updateSummary();
+        //}
 
         /* Toggle hardkey control availability depending on navbar state */
         if (homeCategory != null) {

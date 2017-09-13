@@ -22,8 +22,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
-import org.cyanogenmod.lineageparts.contributors.ContributorsCloudFragment;
-import org.cyanogenmod.lineageparts.gestures.TouchscreenGestureSettings;
+//import org.cyanogenmod.lineageparts.contributors.ContributorsCloudFragment;
+//import org.cyanogenmod.lineageparts.gestures.TouchscreenGestureSettings;
 import org.cyanogenmod.lineageparts.input.ButtonSettings;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -39,10 +39,10 @@ public class BootReceiver extends BroadcastReceiver {
             setRestoredTunable(ctx);
         }
 
-        TouchscreenGestureSettings.restoreTouchscreenGestureStates(ctx);
+        //TouchscreenGestureSettings.restoreTouchscreenGestureStates(ctx);
 
         // Extract the contributors database
-        ContributorsCloudFragment.extractContributorsCloudDatabase(ctx);
+        //ContributorsCloudFragment.extractContributorsCloudDatabase(ctx);
     }
 
     private boolean hasRestoredTunable(Context context) {
